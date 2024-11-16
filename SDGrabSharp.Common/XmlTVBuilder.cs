@@ -311,7 +311,7 @@ namespace SDGrabSharp.Common
                     evSDRequestReady.Set();
                 }
             }
-            ActivityLog($"Processed {md5Count.ToString()} MD5 responses");
+            ActivityLog($"Processed {md5Count} MD5 responses");
         }
 
         private void processScheduleResponses(List<string> programmeRequestList, int scheduleRequestsSent,
@@ -439,7 +439,7 @@ namespace SDGrabSharp.Common
                 }
             }
 
-            ActivityLog($"Processed {scheduleCount.ToString()} schedules with {programmeCount.ToString()} programmes");
+            ActivityLog($"Processed {scheduleCount} schedules with {programmeCount} programmes");
         }
 
         private void processProgrammeResponses(int programRequestsSent, ref int programmeCount)
@@ -529,8 +529,8 @@ namespace SDGrabSharp.Common
             }
 
             ActivityLog(cachedResults == 0
-                ? $"Processed {programmeCount.ToString()} unique programme responses"
-                : $"Processed {programmeCount.ToString()} unique programme responses, {cachedResults} cache hits");
+                ? $"Processed {programmeCount} unique programme responses"
+                : $"Processed {programmeCount} unique programme responses, {cachedResults} cache hits");
         }
 
         private void validateCorrectProgrammes()
@@ -804,8 +804,7 @@ namespace SDGrabSharp.Common
                                         {
                                             foreach (var request in programmeRequest.programmeRequest)
                                             {
-                                                SDProgrammeResponse result;
-                                                if (programmeCache.TryGetValue(request, out result))
+                                                if (programmeCache.TryGetValue(request, out SDProgrammeResponse result))
                                                 {
                                                     cachedResponses.Add(result);
                                                 }
@@ -1153,7 +1152,6 @@ namespace SDGrabSharp.Common
 
         private int getTotalProgrammeQueue(SDRequestQueue queue)
         {
-            var programmeCount = 0;
             var allRequests = new List<string>();
 
             foreach (var queueItem in queue.items.Where(row => row.sdRequestType == SDRequestQueue.RequestType.SDRequestProgramme).Distinct())
